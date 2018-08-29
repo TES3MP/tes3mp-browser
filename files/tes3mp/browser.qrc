@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="browser">
+    <file>tes3mp_logo.png</file>
+  </qresource>
+</RCC>
