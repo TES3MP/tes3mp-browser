@@ -80,9 +80,6 @@ void SettingsMgr::loadClientSettings(Ui::DialogSettings &mw)
     mw.leClientPassword->setText(QString::fromStdString(clientMgr.getString("password", "General")));
     mw.combLoglevel->setCurrentIndex(clientMgr.getInt("loglevel", "General"));
 
-    mw.leClientMAddress->setText(QString::fromStdString(clientMgr.getString("address", "Master")));
-    mw.leClientMPort->setText(QString::fromStdString(clientMgr.getString("port", "Master")));
-
     mw.pbChatKey->setText(QString::fromStdString(clientMgr.getString("keySay", "Chat")));
     mw.pbModeKey->setText(QString::fromStdString(clientMgr.getString("keyChatMode", "Chat")));
 
