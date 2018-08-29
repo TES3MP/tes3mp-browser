@@ -75,7 +75,7 @@ void SettingsMgr::saveBrowserSettings(MainWindow &mw)
 
 void SettingsMgr::loadClientSettings(Ui::DialogSettings &mw)
 {
-    /*mw.leClientAddress->setText(QString::fromStdString(clientMgr.getString("destinationAddress", "General")));
+    mw.leClientAddress->setText(QString::fromStdString(clientMgr.getString("destinationAddress", "General")));
     mw.leClientPort->setText(QString::fromStdString(clientMgr.getString("port", "General")));
     mw.leClientPassword->setText(QString::fromStdString(clientMgr.getString("password", "General")));
     mw.combLoglevel->setCurrentIndex(clientMgr.getInt("loglevel", "General"));
@@ -88,7 +88,7 @@ void SettingsMgr::loadClientSettings(Ui::DialogSettings &mw)
     mw.sbPosW->setValue(clientMgr.getInt("w", "Chat"));
     mw.sbPosH->setValue(clientMgr.getInt("h", "Chat"));
 
-    mw.sbDelay->setValue(clientMgr.getFloat("delay", "Chat"));*/
+    mw.sbDelay->setValue(clientMgr.getFloat("delay", "Chat"));
 }
 
 void SettingsMgr::saveClientSettings(Ui::DialogSettings &mw)
