@@ -132,6 +132,8 @@ MainWindow::MainWindow(QWidget *parent)
     setMotdImage(&img, "https://master.tes3mp.com");*/
 
     connect(MasterClient::get(), &MasterClient::latestVersion, [this](const QString &version){
+        if (version.isEmpty())
+            return;
         QStringList ver = version.split('.');
         int major = ver[0].toInt();
         int minor = ver[1].toInt();
