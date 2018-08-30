@@ -182,6 +182,23 @@ Server getBasic(const nlohmann::json &json, bool extra = false)
 
 void SocketWorker::process()
 {
+    auto fnSend = [this]() {
+        QString cmd;
+        if (serverId.isEmpty())
+            cmd = "GET SERVERS";
+        else
+            cmd = "GET SERVER " + serverId;
+
+        qDebug() << cmd;
+        qint64 bytesSent = webSocket->sendTextMessage(cmd);
+
+        if (bytesSent == 0)
+            qDebug() << "Not connected";
+        else
+            qDebug() << "Bytes sent:" << bytesSent;
+        return bytesSent;
+    };
+
     if(!webSocket)
     {
         webSocket = new QWebSocket;
@@ -196,7 +213,7 @@ void SocketWorker::process()
 
             qDebug() << "binaryMessageReceived";
 
-            nlohmann::json json = nlohmann::json::from_cbor(message.data());
+            nlohmann::json json = nlohmann::json::from_cbor(message.data(), message.size());
 
             if (OnRequestError(json) || json.empty())
                 return;
@@ -232,26 +249,9 @@ void SocketWorker::process()
             if(last)
                 emit finished(); // emit finished if frame is last
         });
+
+        connect(webSocket, &QWebSocket::connected, fnSend);
     }
-
-    auto fnSend = [this]() {
-        QString cmd;
-        if (serverId.isEmpty())
-            cmd = "GET SERVERS";
-        else
-            cmd = "GET SERVER " + serverId;
-
-        qDebug() << cmd;
-        qint64 bytesSent = webSocket->sendTextMessage(cmd);
-
-        if (bytesSent == 0)
-            qDebug() << "Not connected";
-        else
-            qDebug() << "Bytes sent:" << bytesSent;
-        return bytesSent;
-    };
-
-    connect(webSocket, &QWebSocket::connected, fnSend);
 
     if (fnSend() == 0)
         webSocket->open(addr); // we are not connected
