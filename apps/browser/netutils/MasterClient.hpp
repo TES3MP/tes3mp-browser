@@ -4,12 +4,6 @@
 
 #pragma once
 
-#include <string>
-#include <functional>
-#include <map>
-#include <unordered_map>
-#include <variant>
-#include <future>
 #include <QtCore/QString>
 #include <QtCore/QObject>
 #include <QtNetwork>

@@ -6,8 +6,6 @@
 #include <QtNetwork/QTcpSocket>
 #include <QMessageBox>
 
-#include <memory>
-#include <iostream>
 #include <utility>
 
 #include <json.hpp>
@@ -188,7 +186,7 @@ void SocketWorker::process()
     {
         webSocket = new QWebSocket;
         //connect(webSocket, &QWebSocket::disconnected, this, &SocketWorker::finished);
-        connect(webSocket, &QWebSocket::disconnected, [this](){
+        connect(webSocket, &QWebSocket::disconnected, [this]() {
             qDebug() << "Disconnected" << webSocket->closeReason();
         });
 
@@ -206,7 +204,6 @@ void SocketWorker::process()
             Server server = getBasic(json, true);
             ServerExtra extra;
 
-            extra.dlServer = json["dlServer"];
             extra.dlServer = json["dlServer"];
 
             for (const auto &player : json["players"])
@@ -238,27 +235,23 @@ void SocketWorker::process()
     }
 
     auto fnSend = [this]() {
-        qint64 bytesSent;
-
+        QString cmd;
         if (serverId.isEmpty())
-        {
-            qDebug() << "GET SERVERS";
-            bytesSent = webSocket->sendTextMessage("GET SERVERS");
-        }
+            cmd = "GET SERVERS";
         else
-        {
-            qDebug() << "GET SERVER " + serverId;
-            bytesSent = webSocket->sendTextMessage("GET SERVER " + serverId);
-        }
+            cmd = "GET SERVER " + serverId;
+
+        qDebug() << cmd;
+        qint64 bytesSent = webSocket->sendTextMessage(cmd);
+
         if (bytesSent == 0)
             qDebug() << "Not connected";
+        else
+            qDebug() << "Bytes sent:" << bytesSent;
         return bytesSent;
     };
 
-    connect(webSocket, &QWebSocket::connected, [this, fnSend]() {
-        qint64 bytesSent = fnSend();
-        qDebug() << "Bytes sent:" << bytesSent;
-    });
+    connect(webSocket, &QWebSocket::connected, fnSend);
 
     if (fnSend() == 0)
         webSocket->open(addr); // we are not connected
