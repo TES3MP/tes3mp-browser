@@ -112,7 +112,7 @@ void MasterClient::requestServer(const Server &server)
 
 void MasterClient::requestLatestVersionStr()
 {
-    nam->get(QNetworkRequest(QUrl("http://" + addr + "/browser/version")));
+    nam->get(QNetworkRequest(QUrl("https://" + addr + "/browser/version")));
     connect(nam, &QNetworkAccessManager::finished,
             [this](QNetworkReply *reply) {
                 QString version = reply->readAll();
@@ -132,7 +132,7 @@ SocketWorker::~SocketWorker()
 
 void SocketWorker::address(const QString &_addr)
 {
-    addr = "ws://" + _addr + "/websocket";
+    addr = "wss://" + _addr + "/websocket";
 }
 
 void SocketWorker::requestExtra(const Server &server)
