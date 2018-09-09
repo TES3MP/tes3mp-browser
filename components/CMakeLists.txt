@@ -12,6 +12,7 @@ set(COMPONENT_FILES
         files/escape.cpp
         files/linuxpath.cpp
         files/multidircollection.cpp
+        files/windowspath.cpp
         )
 
 set(COMPONENT_MOC_FILES
