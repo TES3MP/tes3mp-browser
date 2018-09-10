@@ -78,7 +78,7 @@ void SettingsMgr::loadClientSettings(Ui::DialogSettings &mw)
     mw.leClientAddress->setText(QString::fromStdString(clientMgr.getString("destinationAddress", "General")));
     mw.leClientPort->setText(QString::fromStdString(clientMgr.getString("port", "General")));
     mw.leClientPassword->setText(QString::fromStdString(clientMgr.getString("password", "General")));
-    mw.combLoglevel->setCurrentIndex(clientMgr.getInt("loglevel", "General"));
+    mw.combLoglevel->setCurrentIndex(clientMgr.getInt("logLevel", "General"));
 
     mw.pbChatKey->setText(QString::fromStdString(clientMgr.getString("keySay", "Chat")));
     mw.pbModeKey->setText(QString::fromStdString(clientMgr.getString("keyChatMode", "Chat")));
@@ -96,7 +96,7 @@ void SettingsMgr::saveClientSettings(Ui::DialogSettings &mw)
     clientMgr.setString("destinationAddress", "General", mw.leClientAddress->text().toStdString());
     clientMgr.setString("port", "General", mw.leClientPort->text().toStdString());
     clientMgr.setString("password", "General", mw.leClientPassword->text().toStdString());
-    clientMgr.setInt("loglevel", "General", mw.combLoglevel->currentIndex());
+    clientMgr.setInt("logLevel", "General", mw.combLoglevel->currentIndex());
 
     clientMgr.setString("keySay", "Chat", mw.pbChatKey->text().toStdString());
     clientMgr.setString("keyChatMode", "Chat", mw.pbModeKey->text().toStdString());
